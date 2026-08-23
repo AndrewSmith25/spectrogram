@@ -43,6 +43,7 @@ impl<'a> State<'a> {
 	) -> Self {
 		let player = WavePlayer::new(audio, wave);
 		let font = font.unwrap_or_else(|| _rl.get_font_default());
+        let sound_duration = player.length();
 
 		State {
 			player,
@@ -51,8 +52,8 @@ impl<'a> State<'a> {
 			spectral_analysis: None,
 			compute_channel,
 			compute_waiting: true,
-			time_resolution: 20, /* 1.0 ms */
-			time_overlap: 190,    /* 0.1 ms */
+			time_resolution: (5.0 * sound_duration) as usize, /* 1.0 ms */
+			time_overlap: (25.0 * sound_duration) as usize,    /* 0.1 ms */
 		}
 	}
 
